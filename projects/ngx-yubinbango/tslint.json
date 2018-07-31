@@ -15,6 +15,6 @@
         ],
         "directive-class-suffix": false,
         "component-class-suffix": false,
-        "no-input-rename": false,
+        "no-input-rename": false
     }
 }
