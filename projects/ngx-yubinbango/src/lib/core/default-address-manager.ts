@@ -1,10 +1,12 @@
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Observable, BehaviorSubject, ConnectableObservable } from 'rxjs';
+import { map, filter, concatMap, publishLast, take, tap } from 'rxjs/operators';
 import { YUBINBANGO_DATA_URL, REGION } from './constant';
 import { Address } from '../models/address';
 import { AddressManager } from './address-manager';
 import { Injectable } from '@angular/core';
+
+let nextRequestId = 0;
 
 /**
  * デフォルトの住所取得サービス
@@ -14,6 +16,18 @@ import { Injectable } from '@angular/core';
 })
 export class DefaultAddressManager implements AddressManager<Address> {
 
+  /**
+   * 第一キー: 郵便番号上位3桁
+   * 第二キー: 郵便番号7桁
+   */
+  readonly addressCache: Record<string, ConnectableObservable<Record<string, Address>>> = {};
+
+  /**
+   * リクエストの整理番号。
+   * 多重でリクエストを投げると、callbackがわけわからんことになるので対策。
+   */
+  readonly referenceId = new BehaviorSubject(0);
+
   constructor(
     private http: HttpClient
   ) { }
@@ -22,23 +36,38 @@ export class DefaultAddressManager implements AddressManager<Address> {
     // 上3桁で検索を行う
     const topPostalCode = postalCode.substr(0, 3);
 
-    return this.http.jsonp(`${YUBINBANGO_DATA_URL}/${topPostalCode}.js`, 'callback')
+    // キャッシュになければObservable生成
+    // リクエスト中の場合はリクエストを投げない
+    if (!this.addressCache[topPostalCode]) {
+      const requestId = nextRequestId++;
+      const observable = this.referenceId
+        .pipe(
+          filter(id => id === requestId),
+          concatMap(() => this.http.jsonp(`${YUBINBANGO_DATA_URL}/${topPostalCode}.js`, 'callback')),
+          // リクエストが終了したので、次の番号に進める
+          tap(() => this.referenceId.next(requestId + 1)),
+          map(data => {
+            const addresses: Record<string, Address> = {};
+
+            Object.keys(data).forEach(key => {
+              addresses[key] = this.mapAddress(data[key]);
+            });
+
+            return addresses;
+          }),
+          take(1),
+          publishLast()
+        ) as ConnectableObservable<Record<string, Address>>;
+
+      observable.connect();
+
+      this.addressCache[topPostalCode] = observable;
+    }
+
+    return this.addressCache[topPostalCode]
       .pipe(
-        map(data => {
-          const addr = data[postalCode];
-
-          if (!addr) {
-            return null;
-          }
-
-          return {
-            regionId: addr[0] || '',
-            region: REGION[addr[0]] || '',
-            locality: addr[1] || '',
-            street: addr[2] || '',
-            extended: addr[3] || '',
-          } as Address;
-        })
+        map(addresses => addresses[postalCode]),
+        take(1)
       );
   }
 
@@ -67,5 +96,15 @@ export class DefaultAddressManager implements AddressManager<Address> {
 
   getExtended(address: Address) {
     return address.extended;
+  }
+
+  private mapAddress(obj: string[]) {
+    return {
+      regionId: obj[0] || '',
+      region: REGION[obj[0]] || '',
+      locality: obj[1] || '',
+      street: obj[2] || '',
+      extended: obj[3] || '',
+    } as Address;
   }
 }
