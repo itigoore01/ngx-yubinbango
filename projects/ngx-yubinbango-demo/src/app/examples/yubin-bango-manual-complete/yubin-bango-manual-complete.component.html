@@ -1,0 +1,14 @@
+<form class="example-form" ybAddress (submit)="false" [ybAutocompleteMode]="'off'" #address="ybAddress">
+  <input placeholder="郵便番号" ybPostalCode>
+
+  <button mat-button (click)="address.complete()">補完する</button>
+
+  <input placeholder="都道府県" ybRegion>
+
+  <input placeholder="市区町村" ybLocality>
+
+  <input placeholder="町名" ybStreet>
+
+  <input placeholder="その他" ybExtended>
+
+</form>

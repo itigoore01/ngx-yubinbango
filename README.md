@@ -1,27 +1,41 @@
-# NgxYubinbango
+# ngx-yubinbango
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.1.0.
+[![Build Status](https://travis-ci.org/itigoore01/ngx-yubinbango.svg?branch=master)](https://travis-ci.org/itigoore01/ngx-yubinbango)
+[![npm version](https://badge.fury.io/js/ngx-yubinbango.svg)](https://badge.fury.io/js/ngx-yubinbango)
 
-## Development server
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+ngx-yubinbangoはAngular用の郵便番号自動補完ライブラリです。
 
-## Code scaffolding
+# Getting Started
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+```
+npm install ngx-yubinbango --save
+```
 
-## Build
+```typescript
+import { NgxYubinBangoModule } from 'ngx-yubinbango';
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+@NgModule({
+  ...
+  imports: [NgxYubinbangoModule, ...]
+  ...
+})
+export class AppModule {
+}
+```
 
-## Running unit tests
+```html
+<form class="example-form" ybAddress>
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+  <input placeholder="郵便番号" ybPostalCode>
 
-## Running end-to-end tests
+  <input placeholder="都道府県" ybRegion>
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+  <input placeholder="市区町村" ybLocality>
 
-## Further help
+  <input placeholder="町名" ybStreet>
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+  <input placeholder="その他" ybExtended>
+
+</form>
+```
