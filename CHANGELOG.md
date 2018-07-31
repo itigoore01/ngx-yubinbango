@@ -1,3 +1,10 @@
+## [1.0.1](https://github.com/itigoore01/ngx-yubinbango/compare/v1.0.0...v1.0.1) (2018-07-31)
+
+
+### Bug Fixes
+
+* **lib:** DefaultAddressManagerのバグを修正し、キャッシュ機能を実装しました。 ([ac96a08](https://github.com/itigoore01/ngx-yubinbango/commit/ac96a08)), closes [#2](https://github.com/itigoore01/ngx-yubinbango/issues/2)
+
 # 1.0.0 (2018-07-31)
 
 
