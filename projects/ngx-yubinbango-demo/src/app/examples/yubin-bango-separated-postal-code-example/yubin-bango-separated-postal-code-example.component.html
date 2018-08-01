@@ -1,13 +1,20 @@
 <h2 class="d-flex align-items-end justify-content-between">
-  補完タイミングをonchangeに
-  <a href="https://github.com/itigoore01/ngx-yubinbango/tree/master/projects/ngx-yubinbango-demo/src/app/examples/yubin-bango-onchange-example" class="align-self-end" target="_new" class="btn btn-link btn-sm"><i class="fas fa-external-link-alt"></i> サンプル</a>
+  郵便番号欄２つ
+  <a href="https://github.com/itigoore01/ngx-yubinbango/tree/master/projects/ngx-yubinbango-demo/src/app/examples/yubin-bango-separated-postal-code-example" class="align-self-end" target="_new" class="btn btn-link btn-sm"><i class="fas fa-external-link-alt"></i> サンプル</a>
 </h2>
 <hr>
 
-<form class="example-form" ybAddress (submit)="false" [ybAutocompleteMode]="'change'">
+<form class="example-form" ybAddress (submit)="false">
   <div class="form-group">
     <label for="postalCodeInput">郵便番号</label>
-    <input id="postalCodeInput" class="form-control" placeholder="郵便番号" ybPostalCode>
+    <div class="form-row">
+      <div class="col">
+        <input id="postalCodeInput" class="form-control" placeholder="郵便番号" maxlength="3" ybPostalCode>
+      </div>
+      <div class="col">
+        <input class="form-control" placeholder="郵便番号" maxlength="4" ybPostalCode>
+      </div>
+    </div>
   </div>
 
   <div class="form-group">
@@ -29,4 +36,5 @@
     <label for="extendedInput">その他</label>
     <input id="extendedInput" class="form-control" placeholder="その他" ybExtended>
   </div>
+
 </form>

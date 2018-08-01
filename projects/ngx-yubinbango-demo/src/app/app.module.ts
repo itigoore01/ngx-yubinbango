@@ -9,7 +9,9 @@ import { DemoAppComponent } from './demo-app/demo-app.component';
 import { YubinBangoDemoComponent } from './yubin-bango-demo/yubin-bango-demo.component';
 import { YubinBangoBasicExampleComponent } from './examples/yubin-bango-basic-example/yubin-bango-basic-example.component';
 import { YubinBangoOnchangeExampleComponent } from './examples/yubin-bango-onchange-example/yubin-bango-onchange-example.component';
-import { YubinBangoManualCompleteComponent } from './examples/yubin-bango-manual-complete/yubin-bango-manual-complete.component';
+import { YubinBangoSeparatedPostalCodeExampleComponent } from './examples/yubin-bango-separated-postal-code-example/yubin-bango-separated-postal-code-example.component';
+import { YubinBangoOneTargetExampleComponent } from './examples/yubin-bango-one-target-example/yubin-bango-one-target-example.component';
+import { YubinBangoManualCompleteExampleComponent } from './examples/yubin-bango-manual-complete-example/yubin-bango-manual-complete-example.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +20,9 @@ import { YubinBangoManualCompleteComponent } from './examples/yubin-bango-manual
     YubinBangoDemoComponent,
     YubinBangoBasicExampleComponent,
     YubinBangoOnchangeExampleComponent,
-    YubinBangoManualCompleteComponent
+    YubinBangoManualCompleteExampleComponent,
+    YubinBangoSeparatedPostalCodeExampleComponent,
+    YubinBangoOneTargetExampleComponent
   ],
   imports: [
     BrowserModule,

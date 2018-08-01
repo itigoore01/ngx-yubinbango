@@ -1,13 +1,18 @@
 <h2 class="d-flex align-items-end justify-content-between">
-  補完タイミングをonchangeに
-  <a href="https://github.com/itigoore01/ngx-yubinbango/tree/master/projects/ngx-yubinbango-demo/src/app/examples/yubin-bango-onchange-example" class="align-self-end" target="_new" class="btn btn-link btn-sm"><i class="fas fa-external-link-alt"></i> サンプル</a>
+  ボタンをトリガーに
+  <a href="https://github.com/itigoore01/ngx-yubinbango/tree/master/projects/ngx-yubinbango-demo/src/app/examples/yubin-bango-manual-complete-example" class="align-self-end" target="_new" class="btn btn-link btn-sm"><i class="fas fa-external-link-alt"></i> サンプル</a>
 </h2>
 <hr>
 
-<form class="example-form" ybAddress (submit)="false" [ybAutocompleteMode]="'change'">
+<form class="example-form" ybAddress (submit)="false" [ybAutocompleteMode]="'off'" #address="ybAddress">
   <div class="form-group">
     <label for="postalCodeInput">郵便番号</label>
-    <input id="postalCodeInput" class="form-control" placeholder="郵便番号" ybPostalCode>
+    <div class="input-group">
+      <input id="postalCodeInput" class="form-control" placeholder="郵便番号" ybPostalCode>
+      <div class="input-group-append">
+        <button class="btn btn-primary" type="button" (click)="address.complete()">補完する</button>
+      </div>
+    </div>
   </div>
 
   <div class="form-group">

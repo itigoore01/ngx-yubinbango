@@ -1,12 +1,32 @@
+<h2 class="d-flex align-items-end justify-content-between">
+  郵便番号欄１つ
+  <a href="https://github.com/itigoore01/ngx-yubinbango/tree/master/projects/ngx-yubinbango-demo/src/app/examples/yubin-bango-basic-example" class="align-self-end" target="_new" class="btn btn-link btn-sm"><i class="fas fa-external-link-alt"></i> サンプル</a>
+</h2>
+<hr>
 <form class="example-form" ybAddress (submit)="false">
-  <input placeholder="郵便番号" ybPostalCode>
+  <div class="form-group">
+    <label for="postalCodeInput">郵便番号</label>
+    <input id="postalCodeInput" class="form-control" placeholder="郵便番号" ybPostalCode>
+  </div>
 
-  <input placeholder="都道府県" ybRegion>
+  <div class="form-group">
+    <label for="regionInput">都道府県</label>
+    <input id="regionInput" class="form-control" placeholder="都道府県" ybRegion>
+  </div>
 
-  <input placeholder="市区町村" ybLocality>
+  <div class="form-group">
+    <label for="localityInput">市区町村</label>
+    <input id="localityInput" class="form-control" placeholder="市区町村" ybLocality>
+  </div>
 
-  <input placeholder="町名" ybStreet>
+  <div class="form-group">
+    <label for="streetInput">町名</label>
+    <input id="streetInput" class="form-control" placeholder="町名" ybStreet>
+  </div>
 
-  <input placeholder="その他" ybExtended>
+  <div class="form-group">
+    <label for="extendedInput">その他</label>
+    <input id="extendedInput" class="form-control" placeholder="その他" ybExtended>
+  </div>
 
 </form>
