@@ -1,0 +1,18 @@
+<h2 class="d-flex align-items-end justify-content-between">
+  １つの入力欄に補完
+  <a href="https://github.com/itigoore01/ngx-yubinbango/tree/master/projects/ngx-yubinbango-demo/src/app/examples/yubin-bango-one-target-example" class="align-self-end" target="_new" class="btn btn-link btn-sm"><i class="fas fa-external-link-alt"></i> サンプル</a>
+</h2>
+<hr>
+
+<form class="example-form" ybAddress (submit)="false">
+  <div class="form-group">
+    <label for="postalCodeInput">郵便番号</label>
+    <input id="postalCodeInput" class="form-control" placeholder="郵便番号" ybPostalCode>
+  </div>
+
+  <div class="form-group">
+    <label for="addressInput">住所</label>
+    <input id="addressInput" class="form-control" placeholder="住所" ybRegion ybLocality ybStreet ybExtended>
+  </div>
+
+</form>
