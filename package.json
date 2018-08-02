@@ -63,7 +63,7 @@
   },
   "release": {
     "pkgRoot": "dist/ngx-yubinbango",
-    "release": {
+    "analyzeCommits": {
       "preset": "angular",
       "releaseRules": [
         { "type": "docs", "scope": "lib", "release": "patch" },
