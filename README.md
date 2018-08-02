@@ -6,7 +6,11 @@
 
 ngx-yubinbangoはAngular用の郵便番号自動補完ライブラリです。
 
-# Getting Started
+# Demo
+
+https://itigoore01.github.io/ngx-yubinbango/
+
+# Get Started
 
 ```
 npm install ngx-yubinbango --save
