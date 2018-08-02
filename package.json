@@ -63,6 +63,14 @@
   },
   "release": {
     "pkgRoot": "dist/ngx-yubinbango",
+    "release": {
+      "preset": "angular",
+      "releaseRules": [
+        { "type": "docs", "scope": "lib", "release": "patch" },
+        { "type": "refactor", "release": "patch" },
+        { "type": "style", "release": "patch" }
+      ]
+    },
     "prepare": [
       {
         "path": "@semantic-release/changelog",
