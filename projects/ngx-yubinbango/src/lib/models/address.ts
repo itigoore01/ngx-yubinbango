@@ -1,5 +1,5 @@
 export interface Address {
-  regionId: string;
+  regionId: number;
   region: string;
   locality: string;
   street: string;

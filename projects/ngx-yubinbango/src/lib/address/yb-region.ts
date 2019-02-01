@@ -1,4 +1,4 @@
-import { Directive, ElementRef, Renderer2, Self, Optional } from '@angular/core';
+import { Directive, ElementRef, Renderer2, Self, Optional, Inject } from '@angular/core';
 import { NgControl } from '@angular/forms';
 import { CompletionTarget } from '../core/common-behaviors/completion-target';
 
@@ -10,7 +10,7 @@ export class YbRegion extends CompletionTarget {
   constructor(
     renderer: Renderer2,
     elementRef: ElementRef,
-    @Self() @Optional() ngControl: NgControl,
+    @Inject(NgControl) @Self() @Optional() ngControl: NgControl | undefined,
   ) {
     super(ngControl, elementRef, renderer);
   }

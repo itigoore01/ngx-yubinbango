@@ -13,7 +13,7 @@ export class CompletionTarget {
     return '';
   }
   set value(value: string) {
-    if (this.ngControl) {
+    if (this.ngControl && this.ngControl.control) {
       this.ngControl.control.setValue(value);
     } else if ('value' in this.elementRef.nativeElement) {
       this.renderer.setProperty(this.elementRef.nativeElement, 'value', value);
@@ -23,7 +23,7 @@ export class CompletionTarget {
   }
 
   constructor(
-    public ngControl: NgControl,
+    public ngControl: NgControl | undefined,
     public elementRef: ElementRef,
     public renderer: Renderer2,
   ) { }
