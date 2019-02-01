@@ -6,8 +6,8 @@ import { DefaultAddressManager } from './default-address-manager';
   providedIn: 'root',
   useExisting: DefaultAddressManager,
 })
-export abstract class AddressManager<T = any> {
-  abstract getAddress(postalCode: string): Observable<T>;
+export abstract class AddressManager<T = Object> {
+  abstract getAddress(postalCode: string): Observable<T | null>;
   abstract validatePostalCode(postalCode: string): boolean;
   abstract normalizePostalCode(postalCode: string): string;
   abstract getRegion(address: T): string;

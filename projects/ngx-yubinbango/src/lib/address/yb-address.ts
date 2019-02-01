@@ -6,7 +6,9 @@ import { YbLocality } from './yb-locality';
 import { YbStreet } from './yb-street';
 import { YbExtended } from './yb-extended';
 import { Observable, merge, Subscription } from 'rxjs';
-import { startWith, mapTo, filter } from 'rxjs/operators';
+import { startWith, mapTo, filter, map } from 'rxjs/operators';
+
+export type YbAddressAutocompleteMode = 'change' | 'keyup' | 'off';
 
 @Directive({
   selector: '[ybAddress]',
@@ -14,28 +16,34 @@ import { startWith, mapTo, filter } from 'rxjs/operators';
 })
 export class YbAddress implements OnDestroy, AfterContentInit {
 
-  @Input('ybAutocompleteMode') autocompleteMode: 'change' | 'keyup' | 'off' = 'keyup';
+  @Input('ybAutocompleteMode') autocompleteMode: YbAddressAutocompleteMode = 'keyup';
 
-  @ContentChildren(YbPostalCode, { descendants: true }) postalCodes: QueryList<YbPostalCode>;
+  @ContentChildren(YbPostalCode, { descendants: true }) postalCodes!: QueryList<YbPostalCode>;
 
-  @ContentChild(YbRegion) region: YbRegion;
+  @ContentChild(YbRegion) region: YbRegion | null = null;
 
-  @ContentChild(YbLocality) locality: YbLocality;
+  @ContentChild(YbLocality) locality: YbLocality | null = null;
 
-  @ContentChild(YbStreet) street: YbStreet;
+  @ContentChild(YbStreet) street: YbStreet | null = null;
 
-  @ContentChild(YbExtended) extended: YbExtended;
+  @ContentChild(YbExtended) extended: YbExtended | null = null;
 
-  private _changeSubscription: Subscription;
+  private _changeSubscription: Subscription | null = null;
 
-  private _postalCodeValueChangeSubscription: Subscription;
+  private _postalCodeValueChangeSubscription: Subscription | null = null;
 
   get postalCodeValueChanges(): Observable<string> {
-    return merge(...this.postalCodes.map(p => p._onChange));
+    return merge(...this.postalCodes.map(p => p._onChange))
+      .pipe(
+        map(v => v || ''),
+      );
   }
 
   get postalCodeKeyup(): Observable<string> {
-    return merge(...this.postalCodes.map(p => p._onKeyup));
+    return merge(...this.postalCodes.map(p => p._onKeyup))
+      .pipe(
+        map(v => v || ''),
+      );
   }
 
   constructor(
@@ -65,16 +73,12 @@ export class YbAddress implements OnDestroy, AfterContentInit {
 
     this._addressManager.getAddress(postalCode)
       .subscribe(addr => {
-        // 一旦すべてリセット
-        if (this.region) { this.region.value = ''; }
-        if (this.locality) { this.locality.value = ''; }
-        if (this.street) { this.street.value = ''; }
-        if (this.extended) { this.extended.value = ''; }
-
-        if (this.region) { this.region.value += this._addressManager.getRegion(addr); }
-        if (this.locality) { this.locality.value += this._addressManager.getLocality(addr); }
-        if (this.street) { this.street.value += this._addressManager.getStreet(addr); }
-        if (this.extended) { this.extended.value += this._addressManager.getExtended(addr); }
+        if (addr) {
+          if (this.region) { this.region.value = this._addressManager.getRegion(addr); }
+          if (this.locality) { this.locality.value = this._addressManager.getLocality(addr); }
+          if (this.street) { this.street.value = this._addressManager.getStreet(addr); }
+          if (this.extended) { this.extended.value = this._addressManager.getExtended(addr); }
+        }
       });
   }
 
@@ -91,12 +95,12 @@ export class YbAddress implements OnDestroy, AfterContentInit {
   }
 
   private _listenToPostalCode() {
-    this._postalCodeValueChangeSubscription = merge<typeof YbAddress['prototype']['autocompleteMode']>(
+    this._postalCodeValueChangeSubscription = merge<YbAddressAutocompleteMode>(
       this.postalCodeValueChanges.pipe(mapTo('change')),
       this.postalCodeKeyup.pipe(mapTo('keyup'))
     )
       .pipe(filter(mode => mode === this.autocompleteMode))
-      .subscribe((mode) => {
+      .subscribe((_) => {
         this.complete();
       });
   }

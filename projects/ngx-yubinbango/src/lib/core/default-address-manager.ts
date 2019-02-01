@@ -8,6 +8,8 @@ import { Injectable } from '@angular/core';
 
 let nextRequestId = 0;
 
+type YubinbangoData = [number, string, string, string | undefined];
+
 /**
  * デフォルトの住所取得サービス
  */
@@ -32,7 +34,7 @@ export class DefaultAddressManager implements AddressManager<Address> {
     private http: HttpClient
   ) { }
 
-  getAddress(postalCode: string): Observable<Address> {
+  getAddress(postalCode: string): Observable<Address | null> {
     // 上3桁で検索を行う
     const topPostalCode = postalCode.substr(0, 3);
 
@@ -46,7 +48,7 @@ export class DefaultAddressManager implements AddressManager<Address> {
           concatMap(() => this.http.jsonp(`${YUBINBANGO_DATA_URL}/${topPostalCode}.js`, 'callback')),
           // リクエストが終了したので、次の番号に進める
           tap(() => this.referenceId.next(requestId + 1)),
-          map(data => {
+          map((data: Record<string, YubinbangoData>) => {
             const addresses: Record<string, Address> = {};
 
             Object.keys(data).forEach(key => {
@@ -98,13 +100,13 @@ export class DefaultAddressManager implements AddressManager<Address> {
     return address.extended;
   }
 
-  private mapAddress(obj: string[]) {
+  private mapAddress([regionId, locality, street, extended]: YubinbangoData): Address {
     return {
-      regionId: obj[0] || '',
-      region: REGION[obj[0]] || '',
-      locality: obj[1] || '',
-      street: obj[2] || '',
-      extended: obj[3] || '',
-    } as Address;
+      regionId,
+      region: REGION[regionId] || '',
+      locality,
+      street,
+      extended: extended || '',
+    };
   }
 }
