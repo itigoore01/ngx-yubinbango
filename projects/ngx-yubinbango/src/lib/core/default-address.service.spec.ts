@@ -19,10 +19,10 @@ describe('DefaultAddressManager', () => {
   it('住所を取得できるべき', async(inject([AddressManager], (service: DefaultAddressManager) => {
     service.getAddress('6110021').subscribe((data) => {
       expect(data).toBeTruthy();
-      expect(data.region).toBe('京都府');
-      expect(data.locality).toBe('宇治市');
-      expect(data.street).toBe('宇治');
-      expect(data.extended).toBe('');
+      expect(data!.region).toBe('京都府');
+      expect(data!.locality).toBe('宇治市');
+      expect(data!.street).toBe('宇治');
+      expect(data!.extended).toBe('');
     });
   })));
 
