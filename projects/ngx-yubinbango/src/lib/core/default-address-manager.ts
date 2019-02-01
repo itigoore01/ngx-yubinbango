@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
-import { Observable, BehaviorSubject, ConnectableObservable } from 'rxjs';
-import { map, filter, concatMap, publishLast, take, tap } from 'rxjs/operators';
+import { Observable, BehaviorSubject, of } from 'rxjs';
+import { map, filter, concatMap, take, shareReplay, catchError, finalize } from 'rxjs/operators';
 import { YUBINBANGO_DATA_URL, REGION } from './constant';
 import { Address } from '../models/address';
 import { AddressManager } from './address-manager';
@@ -22,13 +22,13 @@ export class DefaultAddressManager implements AddressManager<Address> {
    * 第一キー: 郵便番号上位3桁
    * 第二キー: 郵便番号7桁
    */
-  readonly addressCache: Record<string, ConnectableObservable<Record<string, Address>>> = {};
+  private readonly addressCache = new Map<string, Observable<Map<string, Address> | null>>();
 
   /**
    * リクエストの整理番号。
    * 多重でリクエストを投げると、callbackがわけわからんことになるので対策。
    */
-  readonly referenceId = new BehaviorSubject(0);
+  private readonly referenceId = new BehaviorSubject(0);
 
   constructor(
     private http: HttpClient
@@ -38,37 +38,46 @@ export class DefaultAddressManager implements AddressManager<Address> {
     // 上3桁で検索を行う
     const topPostalCode = postalCode.substr(0, 3);
 
-    // キャッシュになければObservable生成
-    // リクエスト中の場合はリクエストを投げない
-    if (!this.addressCache[topPostalCode]) {
+    // キャッシュを確認
+    let addressObservable = this.addressCache.get(topPostalCode);
+
+    if (!addressObservable) {
+      // キャッシュになければObservable生成
+      // リクエスト中の場合はリクエストを投げない
       const requestId = nextRequestId++;
-      const observable = this.referenceId
+      addressObservable = this.referenceId
         .pipe(
           filter(id => id === requestId),
-          concatMap(() => this.http.jsonp(`${YUBINBANGO_DATA_URL}/${topPostalCode}.js`, 'callback')),
-          // リクエストが終了したので、次の番号に進める
-          tap(() => this.referenceId.next(requestId + 1)),
-          map((data: Record<string, YubinbangoData>) => {
-            const addresses: Record<string, Address> = {};
+          take(1),
+          concatMap(() =>
+            this.http.jsonp<Record<string, YubinbangoData>>(`${YUBINBANGO_DATA_URL}/${topPostalCode}.js`, 'callback')
+              .pipe(
+                // 404などでエラーとなった場合はnullとしてキャッシュする
+                catchError(() => of<Record<string, YubinbangoData>>({})),
+                // リクエストが終了したので、次の番号に進める
+                finalize(() => this.referenceId.next(requestId + 1)),
+              )
+          ),
+          map(data => {
+            const addresses = new Map<string, Address>();
 
-            Object.keys(data).forEach(key => {
-              addresses[key] = this.mapAddress(data[key]);
-            });
+            for (const key in data) {
+              if (data.hasOwnProperty(key)) {
+                addresses.set(key, this.mapAddress(data[key]));
+              }
+            }
 
             return addresses;
           }),
-          take(1),
-          publishLast()
-        ) as ConnectableObservable<Record<string, Address>>;
+          shareReplay(1),
+        );
 
-      observable.connect();
-
-      this.addressCache[topPostalCode] = observable;
+        this.addressCache.set(topPostalCode, addressObservable);
     }
 
-    return this.addressCache[topPostalCode]
+    return addressObservable
       .pipe(
-        map(addresses => addresses[postalCode]),
+        map(addresses => addresses ? addresses.get(postalCode) || null : null),
         take(1)
       );
   }

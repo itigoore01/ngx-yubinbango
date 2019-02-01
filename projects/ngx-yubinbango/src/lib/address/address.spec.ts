@@ -1,9 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { NgxYubinBangoModule } from '../ngx-yubin-bango.module';
-import { Component, ViewChild, ElementRef } from '@angular/core';
-import { By } from '@angular/platform-browser';
+import { Component, ViewChild, ElementRef, Injectable } from '@angular/core';
 import { YbAddress } from './yb-address';
-import { YbPostalCode } from './yb-postal-code';
 import { AddressManager } from '../core/address-manager';
 import { YbRegion } from './yb-region';
 import { Address } from '../models/address';
@@ -12,6 +10,7 @@ import { DefaultAddressManager } from '../core/default-address-manager';
 import { YbLocality } from './yb-locality';
 import { YbExtended } from './yb-extended';
 import { YbStreet } from './yb-street';
+import { HttpClient } from '@angular/common/http';
 
 
 @Component({
@@ -27,14 +26,20 @@ import { YbStreet } from './yb-street';
   `
 })
 class TestApp {
-  @ViewChild(YbAddress) address: YbAddress;
-  @ViewChild(YbRegion, { read: ElementRef }) region: ElementRef;
-  @ViewChild(YbLocality, { read: ElementRef }) locality: ElementRef;
-  @ViewChild(YbStreet, { read: ElementRef }) street: ElementRef;
-  @ViewChild(YbExtended, { read: ElementRef }) extended: ElementRef;
+  @ViewChild(YbAddress) address!: YbAddress;
+  @ViewChild(YbRegion, { read: ElementRef }) region!: ElementRef;
+  @ViewChild(YbLocality, { read: ElementRef }) locality!: ElementRef;
+  @ViewChild(YbStreet, { read: ElementRef }) street!: ElementRef;
+  @ViewChild(YbExtended, { read: ElementRef }) extended!: ElementRef;
 }
 
+@Injectable()
 class MockAddressManager extends DefaultAddressManager {
+
+  constructor(http: HttpClient) {
+    super(http);
+  }
+
   getAddress(postalCode: string): Observable<Address> {
     return of({
       region: '大阪府',
