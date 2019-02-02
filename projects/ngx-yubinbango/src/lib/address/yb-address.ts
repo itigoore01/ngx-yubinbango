@@ -96,8 +96,8 @@ export class YbAddress implements OnDestroy, AfterContentInit {
 
   private _listenToPostalCode() {
     this._postalCodeValueChangeSubscription = merge<YbAddressAutocompleteMode>(
-      this.postalCodeValueChanges.pipe(mapTo('change')),
-      this.postalCodeKeyup.pipe(mapTo('keyup'))
+      this.postalCodeValueChanges.pipe(mapTo('change' as YbAddressAutocompleteMode)),
+      this.postalCodeKeyup.pipe(mapTo('keyup' as YbAddressAutocompleteMode))
     )
       .pipe(filter(mode => mode === this.autocompleteMode))
       .subscribe((_) => {
