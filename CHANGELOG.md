@@ -1,3 +1,10 @@
+## [1.0.5](https://github.com/itigoore01/ngx-yubinbango/compare/v1.0.4...v1.0.5) (2019-02-04)
+
+
+### Bug Fixes
+
+* **lib:** ひとつの入力欄に補完をした際に正しく補完されない問題を修正 ([bb4132c](https://github.com/itigoore01/ngx-yubinbango/commit/bb4132c)), closes [#21](https://github.com/itigoore01/ngx-yubinbango/issues/21)
+
 ## [1.0.4](https://github.com/itigoore01/ngx-yubinbango/compare/v1.0.3...v1.0.4) (2019-02-01)
 
 
