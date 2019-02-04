@@ -74,10 +74,15 @@ export class YbAddress implements OnDestroy, AfterContentInit {
     this._addressManager.getAddress(postalCode)
       .subscribe(addr => {
         if (addr) {
-          if (this.region) { this.region.value = this._addressManager.getRegion(addr); }
-          if (this.locality) { this.locality.value = this._addressManager.getLocality(addr); }
-          if (this.street) { this.street.value = this._addressManager.getStreet(addr); }
-          if (this.extended) { this.extended.value = this._addressManager.getExtended(addr); }
+          if (this.region) { this.region.value = ''; }
+          if (this.locality) { this.locality.value = ''; }
+          if (this.street) { this.street.value = ''; }
+          if (this.extended) { this.extended.value = ''; }
+
+          if (this.region) { this.region.value += this._addressManager.getRegion(addr); }
+          if (this.locality) { this.locality.value += this._addressManager.getLocality(addr); }
+          if (this.street) { this.street.value += this._addressManager.getStreet(addr); }
+          if (this.extended) { this.extended.value += this._addressManager.getExtended(addr); }
         }
       });
   }

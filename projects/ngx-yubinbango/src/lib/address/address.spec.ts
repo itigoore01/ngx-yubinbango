@@ -33,6 +33,24 @@ class TestApp {
   @ViewChild(YbExtended, { read: ElementRef }) extended!: ElementRef;
 }
 
+
+@Component({
+  selector: 'yb-test-one-control-app',
+  template: `
+    <form ybAddress>
+      <input value="0000000" ybPostalCode>
+      <input ybRegion ybLocality ybStreet ybExtended>
+    </form>
+  `
+})
+class TestOneControlApp {
+  @ViewChild(YbAddress) address!: YbAddress;
+  @ViewChild(YbRegion, { read: ElementRef }) region!: ElementRef;
+  @ViewChild(YbLocality, { read: ElementRef }) locality!: ElementRef;
+  @ViewChild(YbStreet, { read: ElementRef }) street!: ElementRef;
+  @ViewChild(YbExtended, { read: ElementRef }) extended!: ElementRef;
+}
+
 @Injectable()
 class MockAddressManager extends DefaultAddressManager {
 
@@ -54,7 +72,7 @@ describe('Address without Forms', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [NgxYubinBangoModule],
-      declarations: [TestApp],
+      declarations: [TestApp, TestOneControlApp],
       providers: [
         { provide: AddressManager, useClass: MockAddressManager }
       ]
@@ -67,7 +85,7 @@ describe('Address without Forms', () => {
     expect(fixture).toBeTruthy();
   });
 
-  it('complete', () => {
+  it('それぞれの入力欄に補完されるべき', () => {
     const fixture = TestBed.createComponent(TestApp);
     const component = fixture.componentInstance;
     fixture.detectChanges();
@@ -82,5 +100,22 @@ describe('Address without Forms', () => {
     expect(component.locality.nativeElement.value).toBe('大阪市北区');
     expect(component.street.nativeElement.value).toBe('中之島');
     expect(component.extended.nativeElement.value).toBe('あいうえお');
+  });
+
+  it('ひとつの入力欄に補完されるべき', () => {
+    const fixture = TestBed.createComponent(TestOneControlApp);
+    const component = fixture.componentInstance;
+    fixture.detectChanges();
+
+    expect(component.address.postalCodes.length).toBe(1);
+
+    component.address.complete();
+
+    fixture.detectChanges();
+
+    expect(component.region.nativeElement.value).toBe('大阪府大阪市北区中之島あいうえお');
+    expect(component.locality.nativeElement.value).toBe('大阪府大阪市北区中之島あいうえお');
+    expect(component.street.nativeElement.value).toBe('大阪府大阪市北区中之島あいうえお');
+    expect(component.extended.nativeElement.value).toBe('大阪府大阪市北区中之島あいうえお');
   });
 });
