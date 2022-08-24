@@ -2,6 +2,7 @@
   "$schema": "./node_modules/nx/schemas/workspace-schema.json",
   "version": 2,
   "projects": {
-    "ngx-yubinbango": "packages/ngx-yubinbango"
+    "ngx-yubinbango": "packages/ngx-yubinbango",
+    "ngx-yubinbango-demo": "packages/ngx-yubinbango-demo"
   }
 }

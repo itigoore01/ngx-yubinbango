@@ -30,5 +30,6 @@
     "@nrwl/angular:component": {
       "style": "css"
     }
-  }
+  },
+  "defaultProject": "ngx-yubinbango-demo"
 }

@@ -1,0 +1,93 @@
+{
+  "projectType": "application",
+  "sourceRoot": "packages/ngx-yubinbango-demo/src",
+  "prefix": "ngx-yubinbango",
+  "targets": {
+    "build": {
+      "executor": "@angular-devkit/build-angular:browser",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/packages/ngx-yubinbango-demo",
+        "index": "packages/ngx-yubinbango-demo/src/index.html",
+        "main": "packages/ngx-yubinbango-demo/src/main.ts",
+        "polyfills": "packages/ngx-yubinbango-demo/src/polyfills.ts",
+        "tsConfig": "packages/ngx-yubinbango-demo/tsconfig.app.json",
+        "inlineStyleLanguage": "scss",
+        "assets": [
+          "packages/ngx-yubinbango-demo/src/favicon.ico",
+          "packages/ngx-yubinbango-demo/src/assets"
+        ],
+        "styles": ["packages/ngx-yubinbango-demo/src/styles.scss"],
+        "scripts": []
+      },
+      "configurations": {
+        "production": {
+          "budgets": [
+            {
+              "type": "initial",
+              "maximumWarning": "500kb",
+              "maximumError": "1mb"
+            },
+            {
+              "type": "anyComponentStyle",
+              "maximumWarning": "2kb",
+              "maximumError": "4kb"
+            }
+          ],
+          "fileReplacements": [
+            {
+              "replace": "packages/ngx-yubinbango-demo/src/environments/environment.ts",
+              "with": "packages/ngx-yubinbango-demo/src/environments/environment.prod.ts"
+            }
+          ],
+          "outputHashing": "all"
+        },
+        "development": {
+          "buildOptimizer": false,
+          "optimization": false,
+          "vendorChunk": true,
+          "extractLicenses": false,
+          "sourceMap": true,
+          "namedChunks": true
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "serve": {
+      "executor": "@angular-devkit/build-angular:dev-server",
+      "configurations": {
+        "production": {
+          "browserTarget": "ngx-yubinbango-demo:build:production"
+        },
+        "development": {
+          "browserTarget": "ngx-yubinbango-demo:build:development"
+        }
+      },
+      "defaultConfiguration": "development"
+    },
+    "extract-i18n": {
+      "executor": "@angular-devkit/build-angular:extract-i18n",
+      "options": {
+        "browserTarget": "ngx-yubinbango-demo:build"
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": [
+          "packages/ngx-yubinbango-demo/**/*.ts",
+          "packages/ngx-yubinbango-demo/**/*.html"
+        ]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/packages/ngx-yubinbango-demo"],
+      "options": {
+        "jestConfig": "packages/ngx-yubinbango-demo/jest.config.ts",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}
