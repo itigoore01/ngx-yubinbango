@@ -2,7 +2,9 @@
   "name": "ngx-yubinbango",
   "version": "0.0.0",
   "license": "MIT",
-  "scripts": {},
+  "scripts": {
+    "format": "nx format"
+  },
   "private": true,
   "dependencies": {},
   "devDependencies": {
