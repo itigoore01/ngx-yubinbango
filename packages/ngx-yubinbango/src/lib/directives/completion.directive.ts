@@ -11,7 +11,10 @@ import {
 } from '@angular/core';
 import { NgControl } from '@angular/forms';
 import { Subject, takeUntil } from 'rxjs';
-import { coerceBooleanProperty } from '../utils/coerce-boolean-property';
+import {
+  BooleanPropertyType,
+  coerceBooleanProperty,
+} from '../utils/coerce-boolean-property';
 import { elementHasValue } from '../utils/element-has-value';
 import { AddressProvider } from './provider.directive';
 
@@ -23,7 +26,7 @@ export class CompletionDirective implements OnInit, OnDestroy {
   get ybRegion() {
     return this._ybRegion;
   }
-  set ybRegion(value) {
+  set ybRegion(value: BooleanPropertyType) {
     this._ybRegion = coerceBooleanProperty(value);
   }
   private _ybRegion = false;
@@ -32,7 +35,7 @@ export class CompletionDirective implements OnInit, OnDestroy {
   get ybLocality() {
     return this._ybLocality;
   }
-  set ybLocality(value) {
+  set ybLocality(value: BooleanPropertyType) {
     this._ybLocality = coerceBooleanProperty(value);
   }
   private _ybLocality = false;
@@ -41,7 +44,7 @@ export class CompletionDirective implements OnInit, OnDestroy {
   get ybStreet() {
     return this._ybStreet;
   }
-  set ybStreet(value) {
+  set ybStreet(value: BooleanPropertyType) {
     this._ybStreet = coerceBooleanProperty(value);
   }
   private _ybStreet = false;
@@ -50,7 +53,7 @@ export class CompletionDirective implements OnInit, OnDestroy {
   get ybExtended() {
     return this._ybExtended;
   }
-  set ybExtended(value) {
+  set ybExtended(value: BooleanPropertyType) {
     this._ybExtended = coerceBooleanProperty(value);
   }
   private _ybExtended = false;
@@ -69,7 +72,7 @@ export class CompletionDirective implements OnInit, OnDestroy {
     if (this.ngControl?.control?.setValue) {
       this.ngControl.control.setValue(value);
     } else if (elementHasValue(this.elementRef.nativeElement)) {
-      this.renderer.setValue(this.elementRef.nativeElement, value);
+      this.renderer.setProperty(this.elementRef.nativeElement, 'value', value);
     } else {
       this.renderer.setProperty(
         this.elementRef.nativeElement,
