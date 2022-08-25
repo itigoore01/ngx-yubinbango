@@ -18,7 +18,8 @@
           "packages/ngx-yubinbango-demo/src/assets"
         ],
         "styles": ["packages/ngx-yubinbango-demo/src/styles.scss"],
-        "scripts": []
+        "scripts": [],
+        "baseHref": "/ngx-yubinbango/"
       },
       "configurations": {
         "production": {
