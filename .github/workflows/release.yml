@@ -72,39 +72,40 @@ jobs:
         id: deploy
         uses: actions/deploy-pages@v1
 
-  # release:
-  #   runs-on: ubuntu-latest
-  #   strategy:
-  #     matrix:
-  #       node-version: [16.x]
-  #   needs: setup
-  #   steps:
-  #     - uses: actions/checkout@v3
-  #       with:
-  #         fetch-depth: 0
-  #     - uses: nrwl/nx-set-shas@v2
-  #     - name: Use Node.js ${{ matrix.node-version }}
-  #       uses: actions/setup-node@v3
-  #       with:
-  #         node-version: ${{ matrix.node-version }}
-  #         cache: 'yarn'
-  #     - name: Restore node_modules
-  #       id: node_modules_cache
-  #       uses: actions/cache@v3
-  #       with:
-  #         path: |
-  #           node_modules
-  #           packages/*/node_modules
-  #         key: node-v${{ matrix.node }}-node-modules-${{ hashFiles(format('{0}{1}', github.workspace, '/yarn.lock')) }}
-  #     - name: Setup git
-  #       run: |
-  #         git config user.email "xyz.shotao@gmail.com"
-  #         git config user.name "shota"
-  #     - name: Version
-  #       env:
-  #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  #       run: yarn nx affected --base=last-release --target=version
-  #     - name: Tag last-release
-  #       run: |
-  #         git tag -f last-release
-  #         git push origin last-release --force
+  release:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [16.x]
+    needs: setup
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - uses: nrwl/nx-set-shas@v2
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'yarn'
+      - name: Restore node_modules
+        id: node_modules_cache
+        uses: actions/cache@v3
+        with:
+          path: |
+            node_modules
+            packages/*/node_modules
+          key: node-v${{ matrix.node }}-node-modules-${{ hashFiles(format('{0}{1}', github.workspace, '/yarn.lock')) }}
+      - name: Setup git
+        run: |
+          git config user.email "xyz.shotao@gmail.com"
+          git config user.name "shota"
+      - name: Version
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: yarn nx affected --base=last-release --target=version --releaseAs=premajor --preid=alpha
+      - name: Tag last-release
+        run: |
+          git tag -f last-release
+          git push origin last-release --force
