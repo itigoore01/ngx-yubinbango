@@ -4,6 +4,7 @@
   "license": "MIT",
   "scripts": {
     "format": "nx format",
+    "format:check": "nx format:check",
     "prepare": "husky install",
     "start": "nx serve",
     "test": "nx run-many --target=test --all",
