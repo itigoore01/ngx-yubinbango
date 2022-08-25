@@ -89,6 +89,10 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: 'yarn'
           registry-url: 'https://registry.npmjs.org'
+      - name: Whoami
+        run: npm whoami
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
       - name: Restore node_modules
         id: node_modules_cache
         uses: actions/cache@v3
