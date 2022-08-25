@@ -1,6 +1,14 @@
 {
   "name": "ngx-yubinbango",
   "version": "0.0.1",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/itigoore01/ngx-yubinbango.git",
+    "directory": "packages/ngx-yubinbango"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org"
+  },
   "peerDependencies": {
     "@angular/common": "^14.1.0",
     "@angular/core": "^14.1.0"
