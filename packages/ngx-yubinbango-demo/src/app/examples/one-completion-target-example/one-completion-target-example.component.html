@@ -1,0 +1,25 @@
+<div class="grid grid-cols-1 gap-4">
+  <form [formGroup]="form" ybProvider class="grid grid-cols-1 gap-4">
+    <input
+      formControlName="postalCode"
+      type="text"
+      ngx-yubinbango-input
+      ybPostalCode
+      placeholder="郵便番号"
+    />
+    <input
+      formControlName="address"
+      type="text"
+      ngx-yubinbango-input
+      ybCompletion
+      ybRegion
+      ybLocality
+      ybStreet
+      ybExtended
+      placeholder="住所"
+    />
+  </form>
+  <ngx-yubinbango-value-preview>{{
+    form.value | json
+  }}</ngx-yubinbango-value-preview>
+</div>

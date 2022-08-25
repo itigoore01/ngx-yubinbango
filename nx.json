@@ -28,7 +28,8 @@
       "unitTestRunner": "jest"
     },
     "@nrwl/angular:component": {
-      "style": "css"
+      "style": "scss",
+      "changeDetection": "OnPush"
     }
   },
   "defaultProject": "ngx-yubinbango-demo"

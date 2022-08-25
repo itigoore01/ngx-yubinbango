@@ -1,1 +1,65 @@
-<ngx-yubinbango-nx-welcome></ngx-yubinbango-nx-welcome>
+<div class="bg-slate-800">
+  <div class="max-w-screen-lg mx-auto px-4 py-20">
+    <h1 class="text-6xl mb-4">ngx-yubinbango</h1>
+    <p class="text-secondary mb-8">
+      ngx-yubinbango は、郵便番号を自動補完するAngular用のライブラリです。
+    </p>
+
+    <pre class="rounded border border-slate-600 p-4 bg-slate-700">
+<span class="text-green-600"># npm</span>
+npm install -S ngx-yubinbango
+
+<span class="text-green-600"># yarn</span>
+yarn add ngx-yubinbango
+</pre>
+  </div>
+</div>
+
+<div
+  class="max-w-screen-lg mx-auto grid sm:grid-cols-2 gap-20 sm:gap-12 px-4 py-12"
+>
+  <div>
+    <ngx-yubinbango-demo-title
+      sampleUrl="https://github.com/itigoore01/ngx-yubinbango/tree/main/packages/ngx-yubinbango-demo/src/app/examples/basic-example"
+    >
+      郵便番号欄が1つ
+    </ngx-yubinbango-demo-title>
+    <ngx-yubinbango-basic-example></ngx-yubinbango-basic-example>
+  </div>
+
+  <div>
+    <ngx-yubinbango-demo-title
+      sampleUrl="https://github.com/itigoore01/ngx-yubinbango/tree/main/packages/ngx-yubinbango-demo/src/app/examples/two-postal-code-example"
+    >
+      郵便番号欄が2つ
+    </ngx-yubinbango-demo-title>
+    <ngx-yubinbango-two-postal-code-example></ngx-yubinbango-two-postal-code-example>
+  </div>
+
+  <div>
+    <ngx-yubinbango-demo-title
+      sampleUrl="https://github.com/itigoore01/ngx-yubinbango/tree/main/packages/ngx-yubinbango-demo/src/app/examples/one-completion-target-example"
+    >
+      1つの入力欄に補完
+    </ngx-yubinbango-demo-title>
+    <ngx-yubinbango-one-completion-target-example></ngx-yubinbango-one-completion-target-example>
+  </div>
+
+  <div>
+    <ngx-yubinbango-demo-title
+      sampleUrl="https://github.com/itigoore01/ngx-yubinbango/tree/main/packages/ngx-yubinbango-demo/src/app/examples/onchange-example"
+    >
+      onchange のタイミングで補完
+    </ngx-yubinbango-demo-title>
+    <ngx-yubinbango-onchange-example></ngx-yubinbango-onchange-example>
+  </div>
+
+  <div>
+    <ngx-yubinbango-demo-title
+      sampleUrl="https://github.com/itigoore01/ngx-yubinbango/tree/main/packages/ngx-yubinbango-demo/src/app/examples/manual-example"
+    >
+      ボタンクリックで補完
+    </ngx-yubinbango-demo-title>
+    <ngx-yubinbango-manual-example></ngx-yubinbango-manual-example>
+  </div>
+</div>

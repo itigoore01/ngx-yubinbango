@@ -1,0 +1,42 @@
+<div class="grid grid-cols-1 gap-4">
+  <form
+    [formGroup]="form"
+    ybProvider
+    class="grid grid-cols-1 gap-4"
+    ybAutocompleteMode="manual"
+    #provider="ybProvider"
+  >
+    <div class="flex gap-4">
+      <input
+        class="flex-1"
+        formControlName="postalCode"
+        type="text"
+        ngx-yubinbango-input
+        ybPostalCode
+        placeholder="郵便番号"
+      />
+
+      <button
+        class="bg-slate-700 text-primary rounded text-sm px-4 py-1 font-bold"
+        type="button"
+        (click)="provider.complete()"
+      >
+        補完する
+      </button>
+    </div>
+    <input
+      formControlName="address"
+      type="text"
+      ngx-yubinbango-input
+      ybCompletion
+      ybRegion
+      ybLocality
+      ybStreet
+      ybExtended
+      placeholder="住所"
+    />
+  </form>
+  <ngx-yubinbango-value-preview>{{
+    form.value | json
+  }}</ngx-yubinbango-value-preview>
+</div>

@@ -1,0 +1,57 @@
+<div class="grid grid-cols-1 gap-4">
+  <form [formGroup]="form" ybProvider class="grid grid-cols-1 gap-4">
+    <div class="grid grid-cols-2 gap-4">
+      <input
+        formControlName="postalCode1"
+        type="text"
+        ngx-yubinbango-input
+        ybPostalCode
+        placeholder="郵便番号"
+        maxlength="3"
+      />
+      <input
+        formControlName="postalCode2"
+        type="text"
+        ngx-yubinbango-input
+        ybPostalCode
+        placeholder="郵便番号"
+        maxlength="4"
+      />
+    </div>
+    <input
+      formControlName="region"
+      type="text"
+      ngx-yubinbango-input
+      ybCompletion
+      ybRegion
+      placeholder="都道府県"
+    />
+    <input
+      formControlName="locality"
+      type="text"
+      ngx-yubinbango-input
+      ybCompletion
+      ybLocality
+      placeholder="市区町村"
+    />
+    <input
+      formControlName="street"
+      type="text"
+      ngx-yubinbango-input
+      ybCompletion
+      ybStreet
+      placeholder="町名"
+    />
+    <input
+      formControlName="extended"
+      type="text"
+      ngx-yubinbango-input
+      ybCompletion
+      ybExtended
+      placeholder="その他"
+    />
+  </form>
+  <ngx-yubinbango-value-preview>{{
+    form.value | json
+  }}</ngx-yubinbango-value-preview>
+</div>
