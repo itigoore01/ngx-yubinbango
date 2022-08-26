@@ -63,8 +63,8 @@ jobs:
             node_modules
             packages/*/node_modules
           key: node-v${{ matrix.node }}-node-modules-${{ hashFiles(format('{0}{1}', github.workspace, '/yarn.lock')) }}
-      - name: Check prettier format
-        run: yarn format:check
+      # - name: Check prettier format
+      #   run: yarn format:check
       - name: Lint
         run: yarn lint
 
