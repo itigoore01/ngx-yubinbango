@@ -3,18 +3,11 @@ name: Release
 on:
   workflow_dispatch:
     inputs:
-      releaseAs:
-        type: choice
-        description: Specify the level of change
-        options:
-          - ''
-          - --releaseAs=major
-          - --releaseAs=minor
-          - --releaseAs=patch
-          - --releaseAs=premajor --preid=alpha
-          - --releaseAs=preminor --preid=alpha
-          - --releaseAs=prepatch --preid=alpha
-          - --releaseAs=prerelease --preid=alpha
+      prerelease:
+        type: boolean
+        description: Prerelease
+        required: true
+        default: false
 
 permissions:
   contents: write
@@ -122,7 +115,14 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-        run: yarn nx affected --base=last-release --target=version ${{ github.event.inputs.releaseAs }}
+        if: ${{ github.event.inputs.prerelease != 'true' }}
+        run: yarn nx affected --base=last-release --target=version
+      - name: Version (Prerelease)
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        if: ${{ github.event.inputs.prerelease == 'true' }}
+        run: yarn nx affected --base=last-release --target=version --releaseAs prerelease --preid alpha
       - name: Tag last-release
         run: |
           git tag -f last-release
