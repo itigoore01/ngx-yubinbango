@@ -2,6 +2,8 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+### [2.0.1](https://github.com/itigoore01/ngx-yubinbango/compare/ngx-yubinbango-2.0.0...ngx-yubinbango-2.0.1) (2022-08-29)
+
 ## [2.0.0](https://github.com/itigoore01/ngx-yubinbango/compare/ngx-yubinbango-1.0.5...ngx-yubinbango-2.0.0) (2022-08-25)
 
 
