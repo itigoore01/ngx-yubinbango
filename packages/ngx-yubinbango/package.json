@@ -14,7 +14,7 @@
     "@angular/core": "^14.1.0"
   },
   "dependencies": {
-    "tslib": "2.4.0"
+    "tslib": "2.4.1"
   },
   "devDependencies": {
     "@testing-library/angular": "12.1.2",
