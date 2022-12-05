@@ -17,7 +17,7 @@
     "tslib": "2.4.1"
   },
   "devDependencies": {
-    "@testing-library/angular": "12.2.0",
+    "@testing-library/angular": "12.2.1",
     "@testing-library/user-event": "14.4.3"
   }
 }
