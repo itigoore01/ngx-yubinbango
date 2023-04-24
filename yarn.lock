@@ -2808,17 +2808,6 @@
     dotenv "~10.0.0"
     semver "7.3.4"
 
-"@nrwl/devkit@15.6.2":
-  version "15.6.2"
-  resolved "https://registry.yarnpkg.com/@nrwl/devkit/-/devkit-15.6.2.tgz#954b0dab1639011bbc872e421917ce7140f201a4"
-  integrity sha512-RcPwjr1btr16wz/ZTnLeKMLu4zATWoh5E94qrFxw3n8hXbC5cIW0Hs/D3ho7cuJQCtQmItTD21M7akjvgHsniA==
-  dependencies:
-    "@phenomnomnominal/tsquery" "4.1.1"
-    ejs "^3.1.7"
-    ignore "^5.0.4"
-    semver "7.3.4"
-    tslib "^2.3.0"
-
 "@nrwl/devkit@15.9.1":
   version "15.9.1"
   resolved "https://registry.yarnpkg.com/@nrwl/devkit/-/devkit-15.9.1.tgz#c8c5fd52e4626f5ea9bd0d8de936ae7c868ef936"
@@ -9242,12 +9231,10 @@ ng-packagr@14.2.2:
   optionalDependencies:
     esbuild "^0.15.0"
 
-ngx-deploy-npm@4.3.11:
-  version "4.3.11"
-  resolved "https://registry.yarnpkg.com/ngx-deploy-npm/-/ngx-deploy-npm-4.3.11.tgz#2138b4186cafc35d5fa464cc2d7a45e00c6978a3"
-  integrity sha512-2fvT7+u9iIdzlgkM3iMiQeQyl275RYG7REj7pW/Whve5reoKfkvQn3MLfxAYg/86QZrahHYR4TOhlKr/ccy/VQ==
-  dependencies:
-    "@nrwl/devkit" "15.6.2"
+ngx-deploy-npm@5.2.0:
+  version "5.2.0"
+  resolved "https://registry.yarnpkg.com/ngx-deploy-npm/-/ngx-deploy-npm-5.2.0.tgz#723500ab44fa9e804c681fc51752a2bc1dac481e"
+  integrity sha512-+lsBNlDQ6Lr0fBN2eV+kbiExnPJwmuTK0cz1HBzvi+13DWu/AgAwy5o7bA+IkZL5pS6f4alJpjqY+TDMfGpubw==
 
 nice-napi@^1.0.2:
   version "1.0.2"
