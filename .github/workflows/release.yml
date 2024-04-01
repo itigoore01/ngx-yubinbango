@@ -33,7 +33,7 @@ jobs:
           cache: 'yarn'
       - name: Cache node_modules
         id: node_modules_cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: |
             node_modules
@@ -60,7 +60,7 @@ jobs:
           cache: 'yarn'
       - name: Restore node_modules
         id: node_modules_cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: |
             node_modules
@@ -101,7 +101,7 @@ jobs:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
       - name: Restore node_modules
         id: node_modules_cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: |
             node_modules
