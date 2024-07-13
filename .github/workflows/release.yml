@@ -76,7 +76,7 @@ jobs:
           path: './dist/packages/ngx-yubinbango-demo'
       - name: Deploy to Github Pages
         id: deploy
-        uses: actions/deploy-pages@v1
+        uses: actions/deploy-pages@v4
 
   release:
     runs-on: ubuntu-latest
